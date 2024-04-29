@@ -1,10 +1,20 @@
 package Creatures;
 
 public class Creature {
-    
-    double reproductionChance;
-    double deathChance;
+    private String name;
+    public int reproductionChance, deathChance;
 
-    String getName();
-    
+    public Creature(String name, int reproductionChance, int deathChance) {
+        this.name = name;
+        this.reproductionChance = reproductionChance;
+        this.deathChance = deathChance;
+    }
+
+    public void die() {
+        System.out.println(name + " has died.");
+    }
+
+    public Creature reproduce() {
+        return new Creature(name,reproductionChance, deathChance);
+    }
 }

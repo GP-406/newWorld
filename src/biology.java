@@ -4,6 +4,8 @@ import java.util.Random;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import Creatures.Creature;
+import java.util.Random;
 
 public class biology {
     public static void main(String[] args) {
@@ -23,24 +25,24 @@ public class biology {
     }
 }
 
-class Creature {
-    private String name;
-    public int reproductionChance, deathChance;
+// class Creature {
+//     private String name;
+//     public int reproductionChance, deathChance;
 
-    public Creature(String name, double reproductionChance, double deathChance) {
-        this.name = name;
-        this.reproductionChance = reproductionChance;
-        this.deathChance = deathChance;
-    }
+//     public Creature(String name, double reproductionChance, double deathChance) {
+//         this.name = name;
+//         this.reproductionChance = reproductionChance;
+//         this.deathChance = deathChance;
+//     }
 
-    public void die() {
-        System.out.println(name + " has died.");
-    }
+//     public void die() {
+//         System.out.println(name + " has died.");
+//     }
 
-    public Creature reproduce() {
-        return new Creature(name,reproductionChance, deathChance);
-    }
-}
+//     public Creature reproduce() {
+//         return new Creature(name,reproductionChance, deathChance);
+//     }
+// }
 
 
 class World {
@@ -53,8 +55,9 @@ class World {
     }
     
     public void createCreature() {
-        List<String> nameList = readNamesFromFile("name.txt");
+        List<String> nameList = readNamesFromFile("src/name.txt");
 
+        // !!!ADJUST TO CHANGE FILE PATH TO NAMES.TXT
         if (nameList.isEmpty()) {
             System.out.println("No names found in the name.txt file.");
             return;
@@ -62,8 +65,9 @@ class World {
 
         String randomName = nameList.get(new Random().nextInt(nameList.size()));
 
-        int reproductionChance = (int) (Math.random() * 10) + 1;
-        int deathChance = (int) (Math.random() * 10) + 1;
+        Random rng = new Random();
+        int reproductionChance = rng.nextInt(10);
+        int deathChance = rng.nextInt(10);
 
         Creature newCreature = new Creature(randomName, reproductionChance, deathChance);
         creatures.add(newCreature);
@@ -75,7 +79,8 @@ class World {
 
     public void update() {
         for (Creature creature : creatures) {
-            if ((int) (Math.random() * 11) + 1 < creature.deathChance) {
+            Random rng = new Random();
+            if (rng.nextInt(10) < creature.deathChance) {
                 creature.die();
                 creatures.remove(creature);
                 break;
